@@ -5,12 +5,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     private Animator anim;
     private float localScale;
+    private Rigidbody2D rb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         speed = 5f;
         anim = GetComponent<Animator>();
         localScale = gameObject.transform.localScale.x;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         //If hitting the space bar, trigger the jump animation
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
             anim.SetTrigger("Jump");
         }
     }
