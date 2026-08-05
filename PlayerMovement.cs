@@ -30,5 +30,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         gameObject.transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);   
+
+        //If hitting the space bar, trigger the jump animation
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.SetTrigger("Jump");
+        }
     }
 }
