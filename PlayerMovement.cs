@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
+    public AudioClip gemSound;
+    public AudioClip jumpSound;
     private Animator anim;
     private float localScale;
     private Rigidbody2D rb;
@@ -36,9 +38,11 @@ public class PlayerMovement : MonoBehaviour
     
         //If hitting the space bar, trigger the jump animation
         if (Input.GetKeyDown(KeyCode.Space))
-        {
+        {            
             rb.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
             anim.SetTrigger("Jump");
+            gameObject.GetComponent<AudioSource>().clip = jumpSound;
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -46,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Gem"))
         {
+            gameObject.GetComponent<AudioSource>().clip = gemSound;
             gameObject.GetComponent<AudioSource>().Play(); //Play the gem collection sound effect
             Destroy(other.gameObject); //Destroy the gem object when the player collides with it
             Debug.Log("Gem collected!"); //Log a message to the console when the gem is collected
