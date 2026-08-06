@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public AudioClip gemSound;
     public AudioClip jumpSound;
+    public int score;
     private Animator anim;
     private float localScale;
     private Rigidbody2D rb;
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        score = 0;
         speed = 5f;
         anim = GetComponent<Animator>();
         localScale = gameObject.transform.localScale.x;
@@ -54,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
             gameObject.GetComponent<AudioSource>().Play(); //Play the gem collection sound effect
             Destroy(other.gameObject); //Destroy the gem object when the player collides with it
             Debug.Log("Gem collected!"); //Log a message to the console when the gem is collected
+
+            score++; //Increment the score by 1 when a gem is collected
+            Debug.Log("Score: " + score); //Log the current score to the console
         }
     }    
 }
