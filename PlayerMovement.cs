@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip gemSound;
     public AudioClip jumpSound;
     public int score;
+    public TMP_Text scoreText;
     private Animator anim;
     private float localScale;
     private Rigidbody2D rb;
@@ -18,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         localScale = gameObject.transform.localScale.x;
         rb = GetComponent<Rigidbody2D>();
+
+        scoreText.text = "SCORE: " + score; //Initialize the score text to display the current score
     }
 
     // Update is called once per frame
@@ -59,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
             score++; //Increment the score by 1 when a gem is collected
             Debug.Log("Score: " + score); //Log the current score to the console
+            scoreText.text = "SCORE: " + score; //Update the score text to display the current score
         }
     }    
 }
