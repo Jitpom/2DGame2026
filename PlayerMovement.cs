@@ -32,10 +32,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float  horizontalInput = Input.GetAxis("Horizontal"); 
+        float horizontalInput = Input.GetAxis("Horizontal");
         anim.SetFloat("RunningSpeed", Mathf.Abs(horizontalInput));
-        
-        
+
+
         if (horizontalInput < 0)
         {
             gameObject.transform.localScale = new Vector3(-localScale, localScale, localScale);
@@ -45,11 +45,11 @@ public class PlayerMovement : MonoBehaviour
             gameObject.transform.localScale = new Vector3(localScale, localScale, localScale);
         }
 
-        gameObject.transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);   
-    
+        gameObject.transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+
         //If hitting the space bar, trigger the jump animation
         if (Input.GetKeyDown(KeyCode.Space) && noOfJumps < 2)
-        {            
+        {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
             anim.SetTrigger("Jump");
             gameObject.GetComponent<AudioSource>().clip = jumpSound;
@@ -59,14 +59,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   void OnColliderEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            noOfJumps = 0; //Reset the number of jumps to 0 when the player collides with the ground
-        }
-    } 
-   void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Gem"))
         {
@@ -79,5 +72,14 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Score: " + score); //Log the current score to the console
             scoreText.text = "SCORE: " + score; //Update the score text to display the current score
         }
-    }    
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collided with: " + collision.gameObject.tag); //Log the name of the object the player collided with
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            noOfJumps = 0; //Reset the number of jumps to 0 when the player collides with the ground
+        }
+    }
 }
