@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Gem"))
         {
+            other.gameObject.GetComponent<AudioSource>().Play(); //Play the gem collection sound effect
             Destroy(other.gameObject); //Destroy the gem object when the player collides with it
             Debug.Log("Gem collected!"); //Log a message to the console when the gem is collected
         }
