@@ -33,12 +33,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         gameObject.transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);   
-
+    
         //If hitting the space bar, trigger the jump animation
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
+            rb.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
             anim.SetTrigger("Jump");
         }
     }
+
+   void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Gem"))
+        {
+            Destroy(other.gameObject); //Destroy the gem object when the player collides with it
+            Debug.Log("Gem collected!"); //Log a message to the console when the gem is collected
+        }
+    }    
 }
