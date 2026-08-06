@@ -13,10 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private float localScale;
     private Rigidbody2D rb;
 
+    private int noOfJumps;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         score = 0;
+        noOfJumps = 0;
         speed = 5f;
         jumpForce = 7;
         anim = GetComponent<Animator>();
@@ -45,15 +48,24 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);   
     
         //If hitting the space bar, trigger the jump animation
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && noOfJumps < 2)
         {            
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
             anim.SetTrigger("Jump");
             gameObject.GetComponent<AudioSource>().clip = jumpSound;
             gameObject.GetComponent<AudioSource>().Play();
+
+            noOfJumps++; //Increment the number of jumps by 1 when the player jumps
         }
     }
 
+   void OnColliderEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            noOfJumps = 0; //Reset the number of jumps to 0 when the player collides with the ground
+        }
+    } 
    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Gem"))
