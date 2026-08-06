@@ -4,6 +4,7 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
+    public int jumpForce;
     public AudioClip gemSound;
     public AudioClip jumpSound;
     public int score;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     {
         score = 0;
         speed = 5f;
+        jumpForce = 7;
         anim = GetComponent<Animator>();
         localScale = gameObject.transform.localScale.x;
         rb = GetComponent<Rigidbody2D>();
@@ -45,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         //If hitting the space bar, trigger the jump animation
         if (Input.GetKeyDown(KeyCode.Space))
         {            
-            rb.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); //Add an upward force to the Rigidbody2D to make the player jump
             anim.SetTrigger("Jump");
             gameObject.GetComponent<AudioSource>().clip = jumpSound;
             gameObject.GetComponent<AudioSource>().Play();
